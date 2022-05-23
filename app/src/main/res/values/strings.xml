@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Quwi Test</string>
+    <string name="first_name_label">First name</string>
+    <string name="last_name_label">Last name</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="sign_up_label">Sign up</string>
+    <string name="login_label">Log in</string>
+    <string name="first_name_error">Input first name</string>
+    <string name="last_name_error">Input last name</string>
+    <string name="email_error">Input email</string>
+    <string name="password_error">Input password</string>
+</resources>
