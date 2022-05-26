@@ -14,7 +14,7 @@ interface IAuthRepository {
         name: String,
         email: String,
         password: String
-    ) : RequestResult<Unit>
+    ) : RequestResult<LoginResponse>
 
     suspend fun logout(anywhere: Boolean) : RequestResult<Unit>
 }

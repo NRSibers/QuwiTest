@@ -5,4 +5,5 @@ sealed class ValidateError {
     data class NoLastName(val hasError: Boolean) : ValidateError()
     data class NoEmail(val hasError: Boolean) : ValidateError()
     data class NoPassword(val hasError: Boolean) : ValidateError()
+    object EmailAlreadyInUse : ValidateError()
 }

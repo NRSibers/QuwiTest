@@ -34,16 +34,27 @@ class ChatAdapter : RecyclerView.Adapter<ChatHolder>()  {
     }
 }
 
-class ChatHolder(view: View) : RecyclerView.ViewHolder(view) {
+class ChatHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     private val avatarView = view.findViewById<AppCompatImageView>(R.id.avatar_iv)
     private val chatNameView = view.findViewById<TextView>(R.id.chat_name)
     private val messageView = view.findViewById<TextView>(R.id.message)
+    private val prefix = view.findViewById<TextView>(R.id.prefix_text)
 
     fun bind(info: ChatCardInfo) {
-        chatNameView.text = info.name
+
         messageView.text = info.text
-        Picasso.get().load(info.avatarUrl).transform(CropCircleTransformation()).into(avatarView)
+
+        if (info.isSelfMessage) prefix.visibility = View.VISIBLE
+        else prefix.visibility = View.GONE
+
+        if (info.isSavedChannel) {
+            Picasso.get().load(R.drawable.bookmark_32).transform(CropCircleTransformation()).into(avatarView)
+            chatNameView.text = view.context.getText(R.string.saved_messages_label)
+        } else {
+            Picasso.get().load(info.avatarUrl).transform(CropCircleTransformation()).into(avatarView)
+            chatNameView.text = info.name
+        }
     }
 
 }

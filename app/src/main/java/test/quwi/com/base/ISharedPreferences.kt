@@ -11,4 +11,6 @@ interface ISharedPreferences {
     var accessToken: String?
 
     var userId: Long
+
+    fun logout()
 }

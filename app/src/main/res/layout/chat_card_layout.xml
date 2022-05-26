@@ -6,8 +6,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/avatar_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:padding="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,21 +17,36 @@
         android:id="@+id/chat_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Name group"
+        style="@style/HeaderChatTextStyle"
         app:layout_constraintStart_toEndOf="@id/avatar_iv"
-        android:text="Name group" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/prefix_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/you_prefix_label"
+        android:textColor="@color/teal_700"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar_iv" />
 
     <TextView
         android:id="@+id/message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/chat_name"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="5dp"
-        android:lines="1"
+        android:layout_marginBottom="8dp"
         android:ellipsize="end"
-        android:text="some message some message some message some message some message" />
+        android:lines="1"
+        android:text="some message some message some message some message some message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/prefix_text" />
 
     <View
         android:id="@+id/underline"

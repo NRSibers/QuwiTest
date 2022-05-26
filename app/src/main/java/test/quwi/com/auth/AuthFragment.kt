@@ -39,11 +39,15 @@ class AuthFragment : Fragment() {
 
     private fun init() {
         binding.signUpButton.setOnClickListener {
-            signupClicked()
+            if (binding.motionLayout.currentState == R.id.start)
+                binding.motionLayout.transitionToState(R.id.sign_up)
+            else signupClicked()
         }
 
         binding.logInButton.setOnClickListener {
-            loginClicked()
+            if (binding.motionLayout.currentState == R.id.start)
+                binding.motionLayout.transitionToState(R.id.log_in)
+            else loginClicked()
         }
     }
 
@@ -73,31 +77,14 @@ class AuthFragment : Fragment() {
                         binding.passwordLayout.error = getString(R.string.password_error)
                     else binding.passwordLayout.error = null
                 }
-            }
-        })
-
-        authViewModel.signupLiveData.observe(viewLifecycleOwner, {
-            when(it) {
-                is RequestResult.Success -> {
-                    showToastMessage("Sign")
-                }
-
-                is RequestResult.Error -> {
-
+                ValidateError.EmailAlreadyInUse -> {
+                    binding.emailLayout.error = getString(R.string.email_in_use_error)
                 }
             }
         })
 
         authViewModel.loginLiveData.observe(viewLifecycleOwner, {
-            when(it) {
-                is RequestResult.Success -> {
-                    mainViewModel.openFragment(FragmentRoute.ChatFragment)
-                }
-
-                is RequestResult.Error -> {
-
-                }
-            }
+            mainViewModel.openFragment(FragmentRoute.ChatFragment)
         })
     }
 

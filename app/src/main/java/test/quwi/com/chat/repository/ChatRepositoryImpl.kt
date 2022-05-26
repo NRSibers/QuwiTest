@@ -4,7 +4,6 @@ import test.quwi.com.chat.response.Channel
 import test.quwi.com.auth.response.User
 import test.quwi.com.base.RequestResult
 import test.quwi.com.base.wrapResult
-import test.quwi.com.chat.ChatApi
 import test.quwi.com.users.UsersApi
 
 class ChatRepositoryImpl(

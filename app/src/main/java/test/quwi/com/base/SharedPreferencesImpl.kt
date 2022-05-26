@@ -1,7 +1,6 @@
-package test.quwi.com.modules
+package test.quwi.com.base
 
 import android.content.SharedPreferences
-import test.quwi.com.base.ISharedPreferences
 
 class SharedPreferencesImpl(
     private val preferences: SharedPreferences
@@ -17,6 +16,11 @@ class SharedPreferencesImpl(
         set(value) {
             save(ISharedPreferences.CURRENT_USER_ID, value)
         }
+
+    override fun logout() {
+        accessToken = null
+        userId = Long.MIN_VALUE
+    }
 
     private fun getString(key: String): String? {
         return getString(key, null)

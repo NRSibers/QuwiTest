@@ -10,9 +10,11 @@ import test.quwi.com.auth.AuthRepositoryImpl
 import test.quwi.com.auth.AuthViewModel
 import test.quwi.com.auth.IAuthRepository
 import test.quwi.com.base.Constants
+import test.quwi.com.base.SharedPreferencesImpl
 import test.quwi.com.chat.repository.ChatRepositoryImpl
 import test.quwi.com.chat.ChatViewModel
 import test.quwi.com.chat.repository.IChatRepository
+import test.quwi.com.main.MainViewModel
 
 val appModule = module {
     single<IAuthRepository> {
@@ -29,6 +31,10 @@ val appModule = module {
 
     viewModel {
         ChatViewModel(get(), get())
+    }
+
+    viewModel {
+        MainViewModel(get(), get())
     }
 
     single<SharedPreferences> {

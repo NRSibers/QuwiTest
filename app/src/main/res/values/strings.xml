@@ -6,8 +6,12 @@
     <string name="password_label">Password</string>
     <string name="sign_up_label">Sign up</string>
     <string name="login_label">Log in</string>
+    <string name="logout_label">Logout</string>
     <string name="first_name_error">Input first name</string>
     <string name="last_name_error">Input last name</string>
     <string name="email_error">Input email</string>
     <string name="password_error">Input password</string>
+    <string name="email_in_use_error">Email in use</string>
+    <string name="saved_messages_label">Saved Messages</string>
+    <string name="you_prefix_label">You:</string>
 </resources>

@@ -32,7 +32,7 @@ class AuthRepositoryImpl(
         name: String,
         email: String,
         password: String
-    ) : RequestResult<Unit> {
+    ) : RequestResult<LoginResponse> {
         return wrapResult {
             authApi.signup(
                 DEVICE,

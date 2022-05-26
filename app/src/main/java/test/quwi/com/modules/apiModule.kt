@@ -5,7 +5,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import test.quwi.com.auth.AuthApi
 import test.quwi.com.base.Constants
-import test.quwi.com.chat.ChatApi
+import test.quwi.com.chat.repository.ChatApi
 import test.quwi.com.users.UsersApi
 
 val apiModule = module {

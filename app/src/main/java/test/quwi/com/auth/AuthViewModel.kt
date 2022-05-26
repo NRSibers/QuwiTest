@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import test.quwi.com.base.ISharedPreferences
 import test.quwi.com.auth.response.LoginResponse
 import test.quwi.com.base.RequestResult
@@ -18,12 +19,8 @@ class AuthViewModel (
     val validateUserInfoLiveData: LiveData<ValidateError>
         get() = mValidateUserInfoLiveData
 
-    private val mSignupLiveData = MutableLiveData<RequestResult<Unit>>()
-    val signupLiveData: LiveData<RequestResult<Unit>>
-        get() = mSignupLiveData
-
-    private val mLoginLiveData = MutableLiveData<RequestResult<LoginResponse>>()
-    val loginLiveData: LiveData<RequestResult<LoginResponse>>
+    private val mLoginLiveData = MutableLiveData<LoginResponse>()
+    val loginLiveData: LiveData<LoginResponse>
         get() = mLoginLiveData
 
     fun signUp(userInfo: UserInfo) {
@@ -37,7 +34,24 @@ class AuthViewModel (
                 userInfo.password
             )
 
-            mSignupLiveData.postValue(result)
+            when(result) {
+                is RequestResult.Success -> {
+                    handleAuthResult(result.data)
+                }
+
+                is RequestResult.Error -> {
+                    when(result.error) {
+                        is HttpException -> {
+                            val code = (result.error as HttpException).code()
+                            if (code == 417) mValidateUserInfoLiveData.postValue(ValidateError.EmailAlreadyInUse)
+                        }
+                        else -> {
+
+                        }
+                    }
+
+                }
+            }
         }
     }
 
@@ -52,16 +66,20 @@ class AuthViewModel (
             )
             when(result) {
                 is RequestResult.Success -> {
-                    sharedPreferences.accessToken = result.data.token
-                    sharedPreferences.userId = result.data.appInit.user.id
+                    handleAuthResult(result.data)
                 }
 
                 is RequestResult.Error -> {
 
                 }
             }
-            mLoginLiveData.postValue(result)
         }
+    }
+
+    private fun handleAuthResult(response: LoginResponse) {
+        sharedPreferences.accessToken = response.token
+        sharedPreferences.userId = response.appInit.user.id
+        mLoginLiveData.postValue(response)
     }
 
     private fun validateUserInfo(userInfo: UserInfo) : Boolean {

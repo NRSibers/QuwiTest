@@ -1,4 +1,4 @@
-package test.quwi.com.chat
+package test.quwi.com.chat.repository
 
 import retrofit2.http.GET
 import test.quwi.com.chat.response.ChatChannelsResponse

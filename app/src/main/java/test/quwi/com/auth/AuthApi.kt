@@ -13,7 +13,8 @@ interface AuthApi {
     suspend fun signup(
         @Header("client_device") clientDevice: String,
         @Header("client_timezone_name") clientTimezoneName: String,
-        @Body signUpRequestBody: SignupRequestBody)
+        @Body signUpRequestBody: SignupRequestBody
+    ) : LoginResponse
 
     @POST("auth/login")
     suspend fun login(

@@ -32,16 +32,23 @@ class ChatViewModel(
                         result.data.let { list ->
 
                             val chatCardInfoList = list.map { channel ->
-                                val users = channel.idUsers.filter { it != sharedPreferences.userId }
-                                if (users.size == 1) {
-                                    val participateId = users.first()
-                                    when(val participateResult = chatRepository.getUsers(listOf(participateId))) {
+                                if(channel.idPartner == sharedPreferences.userId)
+                                    ChatCardInfo(
+                                        ChannelTypeEnum.getByType(channel.type),
+                                        channel.messageLast?.user?.name ?: "Saved Messages",
+                                        channel.messageLast?.text ?: "",
+                                        null,
+                                        isSavedChannel = true
+                                    )
+                                else {
+                                    when(val partnerResult = chatRepository.getUsers(listOf(channel.idPartner))) {
                                         is RequestResult.Success -> {
                                             ChatCardInfo(
                                                 ChannelTypeEnum.getByType(channel.type),
                                                 channel.messageLast?.user?.name ?: "",
                                                 channel.messageLast?.text ?: "",
-                                                participateResult.data.first().avatarUrl
+                                                partnerResult.data.first().avatarUrl,
+                                                (channel.messageLast?.idUser ?: Long.MIN_VALUE) == sharedPreferences.userId
                                             )
                                         }
                                         is RequestResult.Error -> {
@@ -49,18 +56,11 @@ class ChatViewModel(
                                                 ChannelTypeEnum.getByType(channel.type),
                                                 channel.messageLast?.user?.name ?: "",
                                                 channel.messageLast?.text ?: "",
-                                                null
+                                                null,
+                                                (channel.messageLast?.idUser ?: Long.MIN_VALUE) == sharedPreferences.userId
                                             )
                                         }
                                     }
-
-                                } else {
-                                    ChatCardInfo(
-                                        ChannelTypeEnum.getByType(channel.type),
-                                        channel.messageLast?.user?.name ?: "",
-                                        channel.messageLast?.text ?: "",
-                                        null
-                                    )
                                 }
                             }
 
