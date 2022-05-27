@@ -35,6 +35,7 @@ class AuthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         observe()
+
     }
 
     private fun init() {
@@ -94,6 +95,8 @@ class AuthFragment : Fragment() {
 
         authViewModel.login(email, password)
     }
+
+
 
     private fun signupClicked() {
         val firstName = binding.firstNameEditText.text.toString()

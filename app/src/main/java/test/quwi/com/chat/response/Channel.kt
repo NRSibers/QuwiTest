@@ -20,7 +20,9 @@ data class Channel(
     @SerializedName("dta_change_msg")
     val dtaChangeMsg: String,
     @SerializedName("message_last")
-    val messageLast: MessageLast?
+    val messageLast: MessageLast?,
+    @SerializedName("pin_to_top")
+    val pinToTop: Boolean
 ) {
     data class MessageLast(
         val id: String,

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import okhttp3.internal.notifyAll
+import org.w3c.dom.Text
 import test.quwi.com.R
 
 class ChatAdapter : RecyclerView.Adapter<ChatHolder>()  {
@@ -29,7 +30,10 @@ class ChatAdapter : RecyclerView.Adapter<ChatHolder>()  {
     override fun getItemCount(): Int = list.size
 
     fun addItems(items: List<ChatCardInfo>) {
-        list.addAll(items)
+        val pinned = items.filter { it.pinToTop }
+        val unpinned = items.filter { !it.pinToTop }
+        list.addAll(pinned)
+        list.addAll(unpinned)
         notifyItemRangeInserted(list.size, items.size)
     }
 }
@@ -40,6 +44,9 @@ class ChatHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     private val chatNameView = view.findViewById<TextView>(R.id.chat_name)
     private val messageView = view.findViewById<TextView>(R.id.message)
     private val prefix = view.findViewById<TextView>(R.id.prefix_text)
+    private val pinnedView = view.findViewById<AppCompatImageView>(R.id.pinned_indicator)
+    private val readIndicator = view.findViewById<AppCompatImageView>(R.id.read_indicator)
+    private val dateTextView = view.findViewById<TextView>(R.id.time_text)
 
     fun bind(info: ChatCardInfo) {
 
@@ -55,6 +62,27 @@ class ChatHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             Picasso.get().load(info.avatarUrl).transform(CropCircleTransformation()).into(avatarView)
             chatNameView.text = info.name
         }
+
+        if (info.pinToTop)
+            pinnedView.visibility = View.VISIBLE
+        else
+            pinnedView.visibility = View.INVISIBLE
+
+        when (info.readIndicator) {
+            ReadIndicatorEnum.NON -> {
+                readIndicator.visibility = View.INVISIBLE
+            }
+            ReadIndicatorEnum.SENT -> {
+                readIndicator.setImageResource(R.drawable.done)
+                readIndicator.setColorFilter(R.color.grey_primary)
+            }
+            ReadIndicatorEnum.READ -> {
+                readIndicator.setImageResource(R.drawable.done_all)
+                readIndicator.setColorFilter(R.color.green_primary)
+            }
+        }
+
+        dateTextView.text = info.dateText
     }
 
 }
