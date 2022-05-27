@@ -99,10 +99,10 @@ class AuthFragment : Fragment() {
 
 
     private fun signupClicked() {
-        val firstName = binding.firstNameEditText.text.toString()
-        val lastName = binding.lastNameEditText.text.toString()
-        val email = binding.emailEditText.text.toString()
-        val password = binding.passwordNameEditText.text.toString()
+        val firstName = binding.firstNameEditText.text.toString().trim()
+        val lastName = binding.lastNameEditText.text.toString().trim()
+        val email = binding.emailEditText.text.toString().trim()
+        val password = binding.passwordNameEditText.text.toString().trim()
 
         authViewModel.signUp(
             UserInfo(
